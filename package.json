@@ -1,7 +1,7 @@
 {
   "name": "wly-api",
   "version": "1.0.0",
-  "description": "This project was bootstrapped with Fastify-CLI.",
+  "description": "WLY backend API built with fastify.",
   "main": "app.ts",
   "directories": {
     "test": "test"
