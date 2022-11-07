@@ -2,6 +2,9 @@ import { join } from "path";
 import AutoLoad, { AutoloadPluginOptions } from "@fastify/autoload";
 import { FastifyPluginAsync } from "fastify";
 import fastifyEnv from "@fastify/env";
+import mongoose from "mongoose";
+
+const MONGO_URL = process.env["MONGO_URL"] || "mongodb://localhost:27017/wly";
 
 export type AppOptions = {
   // Place your custom options for app below here.
@@ -14,20 +17,16 @@ const app: FastifyPluginAsync<AppOptions> = async (
   fastify,
   opts
 ): Promise<void> => {
-  // Place here your custom code!
+  mongoose
+    .connect(MONGO_URL)
+    .then(() => console.log("MongoDB connected..."))
+    .catch((err) => console.log(err));
 
-  // Do not touch the following lines
-
-  // This loads all plugins defined in plugins
-  // those should be support plugins that are reused
-  // through your application
   void fastify.register(AutoLoad, {
     dir: join(__dirname, "plugins"),
     options: opts,
   });
 
-  // This loads all plugins defined in routes
-  // define your routes in one of these
   void fastify.register(AutoLoad, {
     dir: join(__dirname, "routes"),
     options: opts,
