@@ -2,6 +2,7 @@ import { join } from "path";
 import AutoLoad, { AutoloadPluginOptions } from "@fastify/autoload";
 import { FastifyPluginAsync } from "fastify";
 import fastifyEnv from "@fastify/env";
+import fastifyJwt from "@fastify/jwt";
 import mongoose from "mongoose";
 
 const MONGO_URL = process.env["MONGO_URL"] || "mongodb://localhost:27017/wly";
@@ -30,6 +31,10 @@ const app: FastifyPluginAsync<AppOptions> = async (
   void fastify.register(AutoLoad, {
     dir: join(__dirname, "routes"),
     options: opts,
+  });
+
+  void fastify.register(fastifyJwt, {
+    secret: process.env.SECRET || "secret"
   });
 
   void fastify.register(fastifyEnv, {
