@@ -10,8 +10,9 @@ const login: RouteHandlerMethod = async (request, reply) => {
   try {
     const user = await User.findOne({ username });
 
-    if(!user) {
-      reply.badRequest("Username is not correct.")
+    if (!user) {
+      reply.badRequest("Username is not correct.");
+      return;
     }
 
     const passwordMatch = await request.server.bcrypt.compare(
@@ -21,11 +22,12 @@ const login: RouteHandlerMethod = async (request, reply) => {
 
     if (!passwordMatch) {
       reply.badRequest("Password is not correct.");
+      return;
     }
 
     const token = request.server.jwt.sign({ userId: user?.id });
 
-    return { token };
+    return { token, username, role: user.role };
   } catch (e) {
     console.log(e);
   }
