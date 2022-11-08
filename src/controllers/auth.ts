@@ -8,7 +8,20 @@ const login: RouteHandlerMethod = async (request, reply) => {
   };
 
   try {
-    const user = await User.findOne({ username, password });
+    const user = await User.findOne({ username });
+
+    if(!user) {
+      reply.badRequest("Username is not correct.")
+    }
+
+    const passwordMatch = await request.server.bcrypt.compare(
+      password,
+      user?.password || ""
+    );
+
+    if (!passwordMatch) {
+      reply.badRequest("Password is not correct.");
+    }
 
     const token = request.server.jwt.sign({ userId: user?.id });
 

@@ -3,6 +3,7 @@ import AutoLoad, { AutoloadPluginOptions } from "@fastify/autoload";
 import { FastifyPluginAsync } from "fastify";
 import fastifyEnv from "@fastify/env";
 import fastifyJwt from "@fastify/jwt";
+import fastifyBcrypt from "fastify-bcrypt";
 import mongoose from "mongoose";
 
 const MONGO_URL = process.env["MONGO_URL"] || "mongodb://localhost:27017/wly";
@@ -34,7 +35,7 @@ const app: FastifyPluginAsync<AppOptions> = async (
   });
 
   void fastify.register(fastifyJwt, {
-    secret: process.env.SECRET || "secret"
+    secret: process.env.SECRET || "secret",
   });
 
   void fastify.register(fastifyEnv, {
@@ -42,6 +43,10 @@ const app: FastifyPluginAsync<AppOptions> = async (
     schema: {
       type: "object",
     },
+  });
+
+  void fastify.register(fastifyBcrypt, {
+    saltWorkFactor: parseInt(process.env.SALT || "12"),
   });
 };
 
