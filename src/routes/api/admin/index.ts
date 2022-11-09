@@ -6,21 +6,23 @@ import {
 import User from "../../../models/User";
 
 const admin: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
-  const { authorize } = fastify as FastifyInstance & {
-    authorize: onRequestAsyncHookHandler;
+  const { authenticate } = fastify as FastifyInstance & {
+    authenticate: onRequestAsyncHookHandler;
   };
 
-  fastify.addHook("onRequest", authorize);
+  fastify.addHook("onRequest", authenticate);
   fastify.addHook("onRequest", async (request, reply) => {
-    console.log("Checking if admin...")
-    const { userId } = <{ userId: string }>request.user;
-
-    const user = await User.findById(userId);
+    console.log("Checking if admin...");
+    const user = await User.findById(request.user.id);
 
     if (!user) {
       reply.unauthorized("Unauthenticated.");
-    } else if (user.role !== "admin") {
-      reply.unauthorized("This user is not an admin.");
+      return;
+    }
+
+    if (user.role !== "admin") {
+      reply.forbidden("This user is not an admin.");
+      return;
     }
   });
 
