@@ -3,7 +3,7 @@ import {
   FastifyPluginAsync,
   onRequestAsyncHookHandler,
 } from "fastify";
-import User from "../../../models/User";
+import User from "@models/User";
 
 const admin: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
   const { authenticate } = fastify as FastifyInstance & {

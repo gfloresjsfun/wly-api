@@ -1,5 +1,5 @@
 import { RouteHandlerMethod } from "fastify";
-import User from "../models/User";
+import User from "@models/User";
 
 const login: RouteHandlerMethod = async (request, reply) => {
   const { username, password } = request.body as {

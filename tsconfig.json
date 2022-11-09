@@ -2,7 +2,16 @@
   "extends": "fastify-tsconfig",
   "compilerOptions": {
     "outDir": "dist",
-    "sourceMap": true
+    "sourceMap": true,
+    "baseUrl": "src",
+    "paths": {
+			"@models/*": ["models/*"],
+			"@controllers/*": ["controllers/*"],
+		}
+  },
+  "tsc-alias": {
+    "verbose": false,
+    "resolveFullPaths": true
   },
   "include": ["src/**/*.ts"]
 }
