@@ -25,7 +25,7 @@ const login: RouteHandlerMethod = async (request, reply) => {
       return;
     }
 
-    const token = request.server.jwt.sign({ userId: user?.id });
+    const token = request.server.jwt.sign({ id: user?.id });
 
     return { token, username, role: user.role };
   } catch (e) {
