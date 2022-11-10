@@ -1,5 +1,5 @@
 import { FastifyPluginAsync } from "fastify";
-import { login } from "../../controllers/auth";
+import { login } from "@handlers/auth";
 
 const root: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
   fastify.post(
