@@ -1,7 +1,7 @@
 import { FastifyPluginAsync } from "fastify";
-import { login } from "@handlers/auth";
+import { login as loginHandler } from "@handlers/auth";
 
-const root: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
+const login: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
   fastify.post(
     "/",
     {
@@ -20,8 +20,8 @@ const root: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
         },
       },
     },
-    login
+    loginHandler
   );
 };
 
-export default root;
+export default login;
