@@ -53,8 +53,12 @@ const createCourse: RouteHandlerMethod = async (request, reply) => {
       duration,
     });
   }
-  
+
   return await course.save();
 };
 
-export { createCourse };
+const getCourses: RouteHandlerMethod = async (request, reply) => {
+  return await Course.find({});
+};
+
+export { createCourse, getCourses };

@@ -79,7 +79,7 @@ const sessionSchema = {
   },
 };
 
-const createCourseResponseSchema = {
+const courseSchema = {
   type: "object",
   properties: {
     id: { type: "string" },
@@ -88,10 +88,28 @@ const createCourseResponseSchema = {
   },
 };
 
+const createCourseResponseSchema = courseSchema;
+
 export const createCourseSchema = {
   ...createCourseRequestSchema,
   response: {
     200: createCourseResponseSchema,
+    ...errorSchemas,
+  },
+};
+
+const getCoursesRequestSchema = {
+  tags: ["Get courses"],
+  summary: "Get courses",
+  description: `<h3>This API retrievs courses.</h3>`,
+};
+
+const getCoursesResponseSchema = { type: "array", items: courseSchema };
+
+export const getCoursesSchema = {
+  ...getCoursesRequestSchema,
+  response: {
+    200: getCoursesResponseSchema,
     ...errorSchemas,
   },
 };
