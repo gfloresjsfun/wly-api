@@ -5,6 +5,7 @@ import fastifyEnv from "@fastify/env";
 import fastifyJwt from "@fastify/jwt";
 import fastifyBcrypt from "fastify-bcrypt";
 import mongoose from "mongoose";
+import { errorHandler } from "@handlers/error";
 
 const MONGO_URL = process.env["MONGO_URL"] || "mongodb://localhost:27017/wly";
 
@@ -48,6 +49,8 @@ const app: FastifyPluginAsync<AppOptions> = async (
   void fastify.register(fastifyBcrypt, {
     saltWorkFactor: parseInt(process.env.SALT || "12"),
   });
+
+  fastify.setErrorHandler(errorHandler);
 };
 
 export default app;

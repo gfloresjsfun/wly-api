@@ -5,9 +5,11 @@
     "sourceMap": true,
     "baseUrl": "src",
     "paths": {
-			"@models/*": ["models/*"],
-			"@handlers/*": ["handlers/*"],
-		}
+      "@models/*": ["models/*"],
+      "@handlers/*": ["handlers/*"],
+      "@libs/*": ["libs/*"],
+      "@schemas/*": ["schemas/*"]
+    }
   },
   "tsc-alias": {
     "verbose": false,
