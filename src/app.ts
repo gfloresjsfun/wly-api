@@ -3,6 +3,8 @@ import AutoLoad, { AutoloadPluginOptions } from "@fastify/autoload";
 import { FastifyPluginAsync } from "fastify";
 import fastifyEnv from "@fastify/env";
 import fastifyJwt from "@fastify/jwt";
+import fastifyMultipart from "@fastify/multipart";
+import fastifyFormBody from "@fastify/formbody";
 import fastifyBcrypt from "fastify-bcrypt";
 import mongoose from "mongoose";
 import { errorHandler } from "@handlers/error";
@@ -24,6 +26,12 @@ const app: FastifyPluginAsync<AppOptions> = async (
     .connect(MONGO_URL)
     .then(() => console.log("MongoDB connected..."))
     .catch((err) => console.log(err));
+
+  void fastify.register(fastifyFormBody);
+
+  void fastify.register(fastifyMultipart, {
+    attachFieldsToBody: true,
+  });
 
   void fastify.register(AutoLoad, {
     dir: join(__dirname, "plugins"),
