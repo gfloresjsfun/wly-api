@@ -5,6 +5,7 @@
     "sourceMap": true,
     "baseUrl": "src",
     "paths": {
+      "@wly/*": ["*"],
       "@models/*": ["models/*"],
       "@handlers/*": ["handlers/*"],
       "@libs/*": ["libs/*"],

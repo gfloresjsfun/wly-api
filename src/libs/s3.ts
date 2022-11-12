@@ -13,16 +13,15 @@ const bucket = process.env.AWS_S3_BUCKET;
 const GET_SIGNED_URL_OPTIONS = {
   expiresIn: parseInt(process.env.AWS_SIGNED_URL_OPTIONS_EXPIRES_IN || "3600"),
 };
+const s3BaseUrl = `https://${bucket}.s3.amazonaws.com/`;
 
-const generateCoverS3Key = (filename: string) => {
-  return `sessions/covers/${uuidv4()}${extname(filename)}`;
+export const generateS3Url = (key: string) => `${s3BaseUrl}${key}`;
+
+export const generateS3Key = (prefix: string, filename: string) => {
+  return `${prefix}/${uuidv4()}${extname(filename)}`;
 };
 
-const generateMediaS3Key = (filename: string) => {
-  return `sessions/medias/${uuidv4()}${extname(filename)}`;
-};
-
-const uploadToS3 = (body: Buffer, key: string) =>
+export const uploadToS3 = (body: Buffer, key: string) =>
   s3Client.send(
     new PutObjectCommand({
       Bucket: bucket,
@@ -31,7 +30,7 @@ const uploadToS3 = (body: Buffer, key: string) =>
     })
   );
 
-const getS3SignedUrl = (key: string, options = GET_SIGNED_URL_OPTIONS) =>
+export const getS3SignedUrl = (key: string, options = GET_SIGNED_URL_OPTIONS) =>
   getSignedUrl(
     s3Client,
     new GetObjectCommand({
@@ -41,18 +40,10 @@ const getS3SignedUrl = (key: string, options = GET_SIGNED_URL_OPTIONS) =>
     options
   );
 
-const deleteFromS3 = (key: string) =>
+export const deleteFromS3 = (key: string) =>
   s3Client.send(
     new DeleteObjectCommand({
       Bucket: bucket,
       Key: key,
     })
   );
-
-export {
-  generateCoverS3Key,
-  generateMediaS3Key,
-  uploadToS3,
-  getS3SignedUrl,
-  deleteFromS3,
-};
