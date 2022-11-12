@@ -69,6 +69,7 @@ const createCourseRequestSchema = {
 const sessionSchema = {
   type: "object",
   properties: {
+    id: { type: "string" },
     coverS3Key: { type: "string" },
     mediaS3Key: { type: "string" },
     mimetype: {
@@ -110,6 +111,53 @@ export const getCoursesSchema = {
   ...getCoursesRequestSchema,
   response: {
     200: getCoursesResponseSchema,
+    ...errorSchemas,
+  },
+};
+
+const deleteCourseRequestSchema = {
+  tags: ["Delete a course"],
+  summary: "Delete a course",
+  description: `<h3>This API deletes course.</h3>`,
+  params: {
+    type: "object",
+    required: ["id"],
+    properties: {
+      id: { type: "string" },
+    },
+  },
+};
+
+const deleteCourseResponseSchema = courseSchema;
+
+export const deleteCourseSchema = {
+  ...deleteCourseRequestSchema,
+  response: {
+    200: deleteCourseResponseSchema,
+    ...errorSchemas,
+  },
+};
+
+const deleteSessionRequestSchema = {
+  tags: ["Delete a session"],
+  summary: "Delete a session",
+  description: `<h3>This API deletes session.</h3>`,
+  params: {
+    type: "object",
+    required: ["id", "sessionId"],
+    properties: {
+      id: { type: "string" },
+      sessionId: { type: "string" },
+    },
+  },
+};
+
+const deleteSessionResponseSchema = sessionSchema;
+
+export const deleteSessionSchema = {
+  ...deleteSessionRequestSchema,
+  response: {
+    200: deleteSessionResponseSchema,
     ...errorSchemas,
   },
 };

@@ -4,6 +4,7 @@ import {
   S3Client,
   GetObjectCommand,
   PutObjectCommand,
+  DeleteObjectCommand,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
@@ -40,4 +41,18 @@ const getS3SignedUrl = (key: string, options = GET_SIGNED_URL_OPTIONS) =>
     options
   );
 
-export { generateCoverS3Key, generateMediaS3Key, uploadToS3, getS3SignedUrl };
+const deleteFromS3 = (key: string) =>
+  s3Client.send(
+    new DeleteObjectCommand({
+      Bucket: bucket,
+      Key: key,
+    })
+  );
+
+export {
+  generateCoverS3Key,
+  generateMediaS3Key,
+  uploadToS3,
+  getS3SignedUrl,
+  deleteFromS3,
+};

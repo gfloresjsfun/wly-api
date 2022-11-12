@@ -3,8 +3,14 @@ import { MultipartFile } from "@fastify/multipart";
 import { getVideoDurationInSeconds } from "get-video-duration";
 import { getAudioDurationInSeconds } from "get-audio-duration";
 import { Readable } from "stream";
-import { uploadToS3, generateCoverS3Key, generateMediaS3Key } from "@libs/s3";
+import {
+  uploadToS3,
+  deleteFromS3,
+  generateCoverS3Key,
+  generateMediaS3Key,
+} from "@libs/s3";
 import Course from "@models/Course";
+import { DeleteObjectCommandOutput } from "@aws-sdk/client-s3";
 
 const createCourse: RouteHandlerMethod = async (request, reply) => {
   let {
@@ -61,4 +67,50 @@ const getCourses: RouteHandlerMethod = async (request, reply) => {
   return await Course.find({});
 };
 
-export { createCourse, getCourses };
+const deleteCourse: RouteHandlerMethod = async (request, reply) => {
+  const { id } = request.params as { id: string };
+
+  const course = await Course.findByIdAndDelete(id);
+  if (!course) {
+    reply.notFound(`Course #${id} was not found!`);
+    return;
+  }
+
+  const deletePromises: Promise<DeleteObjectCommandOutput>[] = [];
+  for (const session of course.sessions) {
+    deletePromises.concat([
+      deleteFromS3(session.coverS3Key),
+      deleteFromS3(session.mediaS3Key),
+    ]);
+  }
+  await Promise.all(deletePromises);
+
+  return course;
+};
+
+const deleteSession: RouteHandlerMethod = async (request, reply) => {
+  const { id, sessionId } = request.params as { id: string; sessionId: string };
+
+  const course = await Course.findById(id);
+  if (!course) {
+    reply.notFound(`Course #${id} was not found!`);
+    return;
+  }
+
+  const session = course.sessions.id(sessionId);
+  if (!session) {
+    reply.notFound(`Session #${sessionId} was not found!`);
+    return;
+  }
+
+  session.remove();
+  await course.save();
+  await Promise.all([
+    deleteFromS3(session.coverS3Key),
+    deleteFromS3(session.mediaS3Key),
+  ]);
+
+  return session;
+};
+
+export { createCourse, getCourses, deleteCourse, deleteSession };
