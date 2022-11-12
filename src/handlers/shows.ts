@@ -5,6 +5,7 @@ import { uploadToS3, deleteFromS3 } from "@libs/s3";
 import Show from "@models/Show";
 import {
   DeleteObjectCommandOutput,
+  ObjectCannedACL,
   PutObjectCommandOutput,
 } from "@aws-sdk/client-s3";
 import { getMediaDurationFromReadable } from "@libs/media";
@@ -28,7 +29,7 @@ const createShow: RouteHandlerMethod = async (request, reply) => {
   // upload cover to s3
   const coverS3Key = Show.generateCoverS3Key(cover.filename);
   const coverBuffer = await cover.toBuffer();
-  await uploadToS3(coverBuffer, coverS3Key);
+  await uploadToS3(coverBuffer, coverS3Key, ObjectCannedACL.public_read);
 
   // upload media to s3
   const mediaS3Key = Show.generateMediaS3Key(media.filename);

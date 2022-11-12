@@ -5,6 +5,7 @@ import {
   GetObjectCommand,
   PutObjectCommand,
   DeleteObjectCommand,
+  ObjectCannedACL,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
@@ -21,12 +22,17 @@ export const generateS3Key = (prefix: string, filename: string) => {
   return `${prefix}/${uuidv4()}${extname(filename)}`;
 };
 
-export const uploadToS3 = (body: Buffer, key: string) =>
+export const uploadToS3 = (
+  body: Buffer,
+  key: string,
+  acl: ObjectCannedACL = ObjectCannedACL.private
+) =>
   s3Client.send(
     new PutObjectCommand({
       Bucket: bucket,
       Key: key,
       Body: body,
+      ACL: acl,
     })
   );
 

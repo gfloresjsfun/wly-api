@@ -2,6 +2,7 @@ import { RouteHandlerMethod } from "fastify";
 import { MultipartFile } from "@fastify/multipart";
 import { uploadToS3, deleteFromS3 } from "@libs/s3";
 import Album from "@models/Album";
+import { ObjectCannedACL } from "@aws-sdk/client-s3";
 
 const createAlbum: RouteHandlerMethod = async (request, reply) => {
   let {
@@ -17,7 +18,7 @@ const createAlbum: RouteHandlerMethod = async (request, reply) => {
   // upload cover to s3
   const coverS3Key = Album.generateCoverS3Key(cover.filename);
   const coverBuffer = await cover.toBuffer();
-  await uploadToS3(coverBuffer, coverS3Key);
+  await uploadToS3(coverBuffer, coverS3Key, ObjectCannedACL.public_read);
 
   const album = new Album({
     title,
