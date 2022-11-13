@@ -1,5 +1,5 @@
-import { errorSchemas } from "@schemas/common";
-import { coverSchema, showSchema } from "@schemas/shows";
+import { coverSchema, errorSchemas, idSchema } from "@schemas/common";
+import { showSchema } from "@schemas/shows";
 
 const albumSchema = {
   type: "object",
@@ -33,7 +33,7 @@ const createAlbumRequestSchema = {
   description: `<h3>This API creates a album.</h3>`,
   body: {
     type: "object",
-    required: ["title", "cover"],
+    required: ["title", "cover", "shows"],
     properties: {
       title: {
         type: "object",
@@ -46,12 +46,11 @@ const createAlbumRequestSchema = {
       cover: coverSchema,
       shows: {
         type: "array",
+        minItems: 1,
         items: {
           type: "object",
           properties: {
-            value: {
-              type: "string",
-            },
+            value: idSchema,
           },
         },
       },
@@ -65,6 +64,54 @@ export const createAlbumSchema = {
   ...createAlbumRequestSchema,
   response: {
     200: createAlbumResponseSchema,
+    ...errorSchemas,
+  },
+};
+
+const updateAlbumRequestSchema = {
+  tags: ["Update a album"],
+  summary: "Update a album",
+  description: `<h3>This API updates album.</h3>`,
+  params: {
+    type: "object",
+    required: ["id"],
+    properties: {
+      id: { type: "string" },
+    },
+  },
+  body: {
+    type: "object",
+    required: ["title", "shows"],
+    properties: {
+      title: {
+        type: "object",
+        properties: {
+          value: {
+            type: "string",
+          },
+        },
+      },
+      cover: coverSchema,
+      shows: {
+        type: "array",
+        minItems: 1,
+        items: {
+          type: "object",
+          properties: {
+            value: idSchema,
+          },
+        },
+      },
+    },
+  },
+};
+
+const updateAlbumResponseSchema = albumSchema;
+
+export const updateAlbumSchema = {
+  ...updateAlbumRequestSchema,
+  response: {
+    200: updateAlbumResponseSchema,
     ...errorSchemas,
   },
 };

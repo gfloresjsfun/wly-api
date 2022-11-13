@@ -13,10 +13,12 @@ const albumSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    shows: {
-      type: [mongoose.Types.ObjectId],
-      ref: "Show",
-    },
+    shows: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Show",
+      },
+    ],
   },
   {
     virtuals: {
