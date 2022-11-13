@@ -45,6 +45,8 @@ const deleteAlbum: RouteHandlerMethod = async (request, reply) => {
     reply.notFound(`Album #${id} was not found!`);
     return;
   }
+
+  // delete cover from s3
   await deleteFromS3(album.coverS3Key);
 
   return album;

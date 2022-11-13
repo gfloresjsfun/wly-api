@@ -66,6 +66,7 @@ const deleteShow: RouteHandlerMethod = async (request, reply) => {
     return;
   }
 
+  // delete cover & media from s3
   await Promise.all([
     deleteFromS3(show.coverS3Key),
     deleteFromS3(show.mediaS3Key),
