@@ -4,8 +4,8 @@ import Article from "@models/Article";
 interface CreateArticleRequest {
   title: string;
   content: string;
-  shows: [string];
-  tips: [{ brief: string; description: string }];
+  shows: Array<string>;
+  tips: Array<{ brief: string; description: string }>;
 }
 
 const createArticle: RouteHandlerMethod = async (request, reply) => {

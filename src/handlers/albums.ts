@@ -4,16 +4,18 @@ import { uploadToS3, deleteFromS3 } from "@libs/s3";
 import Album from "@models/Album";
 import { ObjectCannedACL } from "@aws-sdk/client-s3";
 
+interface CreateAlbumRequest {
+  title: { value: { title: string } };
+  cover: MultipartFile;
+  shows: Array<{ value: string }>;
+}
+
 const createAlbum: RouteHandlerMethod = async (request, reply) => {
   let {
     title: { value: title },
     cover,
     shows,
-  } = request.body as {
-    title: { value: { title: string } };
-    cover: MultipartFile;
-    shows: [{ value: string }];
-  };
+  } = request.body as CreateAlbumRequest;
 
   // upload cover to s3
   const coverS3Key = Album.generateCoverS3Key(cover.filename);

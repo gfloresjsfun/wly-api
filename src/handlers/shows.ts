@@ -11,6 +11,18 @@ import {
 import { getMediaDurationFromReadable } from "@libs/media";
 import { MediaType } from "@wly/types";
 
+interface CreateShowRequest {
+  title: { value: { title: string } };
+  cover: MultipartFile;
+  media: MultipartFile;
+}
+
+interface UpdateShowRequest {
+  title?: string;
+  cover?: MultipartFile;
+  media?: MultipartFile;
+}
+
 const getShows: RouteHandlerMethod = async (request, reply) => {
   return await Show.find({});
 };
@@ -20,11 +32,7 @@ const createShow: RouteHandlerMethod = async (request, reply) => {
     title: { value: title },
     cover,
     media,
-  } = request.body as {
-    title: { value: { title: string } };
-    cover: MultipartFile;
-    media: MultipartFile;
-  };
+  } = request.body as CreateShowRequest;
 
   // upload cover to s3
   const coverS3Key = Show.generateCoverS3Key(cover.filename);
@@ -68,11 +76,7 @@ const deleteShow: RouteHandlerMethod = async (request, reply) => {
 
 const updateShow: RouteHandlerMethod = async (request, reply) => {
   const { id } = request.params as { id: string };
-  const { title, cover, media } = request.body as {
-    title?: string;
-    cover?: MultipartFile;
-    media?: MultipartFile;
-  };
+  const { title, cover, media } = request.body as UpdateShowRequest;
 
   const show = await Show.findById(id);
   if (!show) {
