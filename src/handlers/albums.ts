@@ -7,12 +7,14 @@ import { uploadToS3, deleteFromS3 } from "@libs/s3";
 
 interface CreateAlbumRequest {
   title: { value: string };
+  description: { value: string };
   cover: MultipartFile;
   shows: Array<{ value: string }>;
 }
 
 interface UpdateAlbumRequest {
   title: { value: string };
+  description: { value: string };
   cover?: MultipartFile;
   shows: Array<{ value: Types.ObjectId }>;
 }
@@ -24,6 +26,7 @@ const getAlbums: RouteHandlerMethod = async (request, reply) => {
 const createAlbum: RouteHandlerMethod = async (request, reply) => {
   let {
     title: { value: title },
+    description: { value: description },
     cover,
     shows,
   } = request.body as CreateAlbumRequest;
@@ -35,6 +38,7 @@ const createAlbum: RouteHandlerMethod = async (request, reply) => {
 
   const album = new Album({
     title,
+    description,
     coverS3Key,
     shows: shows.map((show) => show.value),
   });
@@ -48,6 +52,7 @@ const updateAlbum: RouteHandlerMethod = async (request, reply) => {
   const { id } = request.params as { id: string };
   let {
     title: { value: title },
+    description: { value: description },
     cover,
     shows,
   } = request.body as UpdateAlbumRequest;
@@ -59,6 +64,7 @@ const updateAlbum: RouteHandlerMethod = async (request, reply) => {
   }
 
   album.title = title;
+  album.description = description;
   album.shows = shows.map((show) => show.value);
 
   if (cover) {

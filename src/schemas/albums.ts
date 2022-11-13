@@ -6,6 +6,7 @@ const albumSchema = {
   properties: {
     id: { type: "string" },
     title: { type: "string" },
+    description: { type: "string" },
     coverS3Url: { type: "string" },
     shows: { type: "array", items: showSchema },
   },
@@ -33,9 +34,17 @@ const createAlbumRequestSchema = {
   description: `<h3>This API creates a album.</h3>`,
   body: {
     type: "object",
-    required: ["title", "cover", "shows"],
+    required: ["title", "description", "cover", "shows"],
     properties: {
       title: {
+        type: "object",
+        properties: {
+          value: {
+            type: "string",
+          },
+        },
+      },
+      description: {
         type: "object",
         properties: {
           value: {
@@ -81,9 +90,17 @@ const updateAlbumRequestSchema = {
   },
   body: {
     type: "object",
-    required: ["title", "shows"],
+    required: ["title", "description", "shows"],
     properties: {
       title: {
+        type: "object",
+        properties: {
+          value: {
+            type: "string",
+          },
+        },
+      },
+      description: {
         type: "object",
         properties: {
           value: {
