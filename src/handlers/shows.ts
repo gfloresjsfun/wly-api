@@ -12,13 +12,13 @@ import { getMediaDurationFromReadable } from "@libs/media";
 import { MediaType } from "@wly/types";
 
 interface CreateShowRequest {
-  title: { value: { title: string } };
+  title: { value: string };
   cover: MultipartFile;
   media: MultipartFile;
 }
 
 interface UpdateShowRequest {
-  title?: string;
+  title: { value: string };
   cover?: MultipartFile;
   media?: MultipartFile;
 }
@@ -77,7 +77,11 @@ const deleteShow: RouteHandlerMethod = async (request, reply) => {
 
 const updateShow: RouteHandlerMethod = async (request, reply) => {
   const { id } = request.params as { id: string };
-  const { title, cover, media } = request.body as UpdateShowRequest;
+  const {
+    title: { value: title },
+    cover,
+    media,
+  } = request.body as UpdateShowRequest;
 
   const show = await Show.findById(id);
   if (!show) {

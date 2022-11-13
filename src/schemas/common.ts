@@ -57,3 +57,29 @@ export const errorSchemas = {
 };
 
 export const idSchema = { type: "string" };
+
+export const mediaSchema = {
+  type: "object",
+  properties: {
+    encoding: { type: "string" },
+    filename: { type: "string" },
+    limit: { type: "boolean" },
+    mimetype: {
+      type: "string",
+      enum: ["video/mp4", "audio/mp4", "audio/mpeg"],
+    },
+  },
+};
+
+export const coverSchema = {
+  type: "object",
+  properties: {
+    encoding: { type: "string" },
+    filename: { type: "string" },
+    limit: { type: "boolean" },
+    mimetype: {
+      type: "string",
+      enum: ["image/jpeg", "image/png"],
+    },
+  },
+};
