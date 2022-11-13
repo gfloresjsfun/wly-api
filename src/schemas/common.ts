@@ -55,3 +55,5 @@ export const errorSchemas = {
   500: commonErrorSchema,
   502: commonErrorSchema,
 };
+
+export const idSchema = { type: "string" };
