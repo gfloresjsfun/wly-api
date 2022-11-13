@@ -1,13 +1,5 @@
 import mongoose from "mongoose";
 
-const tipSchema = new mongoose.Schema({
-  brief: {
-    type: String,
-    required: true,
-  },
-  description: String,
-});
-
 const articleSchema = new mongoose.Schema(
   {
     title: {
@@ -18,11 +10,21 @@ const articleSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    shows: {
-      type: [mongoose.Types.ObjectId],
-      ref: "Show",
-    },
-    tips: [tipSchema],
+    shows: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Show",
+      },
+    ],
+    tips: [
+      {
+        brief: {
+          type: String,
+          required: true,
+        },
+        description: String,
+      },
+    ],
   },
   {
     toJSON: {

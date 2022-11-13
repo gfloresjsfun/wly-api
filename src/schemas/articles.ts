@@ -67,6 +67,38 @@ export const createArticleSchema = {
   },
 };
 
+const updateArticleRequestSchema = {
+  tags: ["Update article"],
+  summary: "Update article",
+  description: `<h3>This API updates a article.</h3>`,
+  body: {
+    type: "object",
+    required: ["title", "content", "shows"],
+    properties: {
+      title: { type: "string" },
+      content: { type: "string" },
+      shows: {
+        type: "array",
+        items: idSchema,
+      },
+      tips: {
+        type: "array",
+        items: tipSchema,
+      },
+    },
+  },
+};
+
+const updateArticleResponseSchema = articleSchema;
+
+export const updateArticleSchema = {
+  ...updateArticleRequestSchema,
+  response: {
+    200: updateArticleResponseSchema,
+    ...errorSchemas,
+  },
+};
+
 const deleteArticleRequestSchema = {
   tags: ["Delete a article"],
   summary: "Delete a article",
