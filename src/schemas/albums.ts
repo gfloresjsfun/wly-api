@@ -1,7 +1,7 @@
 import { coverSchema, errorSchemas, idSchema } from "@schemas/common";
 import { showSchema } from "@schemas/shows";
 
-const albumSchema = {
+export const albumSchema = {
   type: "object",
   properties: {
     id: { type: "string" },
