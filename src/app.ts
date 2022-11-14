@@ -5,6 +5,8 @@ import fastifyEnv from "@fastify/env";
 import fastifyJwt from "@fastify/jwt";
 import fastifyMultipart from "@fastify/multipart";
 import fastifyFormBody from "@fastify/formbody";
+import fastifySwagger from "@fastify/swagger";
+import fastifySwaggerUi from "@fastify/swagger-ui";
 import fastifyBcrypt from "fastify-bcrypt";
 import mongoose from "mongoose";
 import { errorHandler } from "@handlers/error";
@@ -36,6 +38,18 @@ const app: FastifyPluginAsync<AppOptions> = async (
   void fastify.register(AutoLoad, {
     dir: join(__dirname, "plugins"),
     options: opts,
+  });
+
+  void fastify.register(fastifySwagger);
+
+  void fastify.register(fastifySwaggerUi, {
+    routePrefix: "/documentation",
+    uiConfig: {
+      docExpansion: "full",
+      deepLinking: false,
+    },
+    staticCSP: true,
+    transformSpecificationClone: true,
   });
 
   void fastify.register(AutoLoad, {

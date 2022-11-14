@@ -13,7 +13,7 @@ export const albumSchema = {
 };
 
 const getAlbumsRequestSchema = {
-  tags: ["Get albums"],
+  tags: ["Albums"],
   summary: "Get albums",
   description: `<h3>This API retrievs albums.</h3>`,
 };
@@ -29,9 +29,10 @@ export const getAlbumsSchema = {
 };
 
 const createAlbumRequestSchema = {
-  tags: ["Create album"],
+  tags: ["Admin/Albums"],
   summary: "Create album",
   description: `<h3>This API creates a album.</h3>`,
+  consumes: ["multipart/form-data"],
   body: {
     type: "object",
     required: ["title", "description", "cover", "shows"],
@@ -78,9 +79,10 @@ export const createAlbumSchema = {
 };
 
 const updateAlbumRequestSchema = {
-  tags: ["Update a album"],
+  tags: ["Admin/Albums"],
   summary: "Update a album",
   description: `<h3>This API updates album.</h3>`,
+  consumes: ["multipart/form-data"],
   params: {
     type: "object",
     required: ["id"],
@@ -134,7 +136,7 @@ export const updateAlbumSchema = {
 };
 
 const deleteAlbumRequestSchema = {
-  tags: ["Delete a album"],
+  tags: ["Admin/Albums"],
   summary: "Delete a album",
   description: `<h3>This API deletes album.</h3>`,
   params: {

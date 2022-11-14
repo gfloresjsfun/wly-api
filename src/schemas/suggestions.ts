@@ -34,7 +34,7 @@ const suggestionSchema = {
 };
 
 const getSuggestionsRequestSchema = {
-  tags: ["Get suggestions"],
+  tags: ["Suggestions"],
   summary: "Get suggestions",
   description: `<h3>This API retrievs suggestions.</h3>`,
 };
@@ -50,7 +50,7 @@ export const getSuggestionsSchema = {
 };
 
 const createSuggestionRequestSchema = {
-  tags: ["Create suggestion"],
+  tags: ["Admin/Suggestions"],
   summary: "Create suggestion",
   description: `<h3>This API creates a suggestion.</h3>`,
   body: {
@@ -92,7 +92,7 @@ export const createSuggestionSchema = {
 };
 
 const updateSuggestionRequestSchema = {
-  tags: ["Update suggestion"],
+  tags: ["Admin/Suggestions"],
   summary: "Update suggestion",
   description: `<h3>This API updates a suggestion.</h3>`,
   body: {
@@ -134,7 +134,7 @@ export const updateSuggestionSchema = {
 };
 
 const deleteSuggestionRequestSchema = {
-  tags: ["Delete a suggestion"],
+  tags: ["Admin/Suggestions"],
   summary: "Delete a suggestion",
   description: `<h3>This API deletes suggestion.</h3>`,
   params: {

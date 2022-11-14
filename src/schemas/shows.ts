@@ -16,7 +16,7 @@ export const showSchema = {
 };
 
 const getShowsRequestSchema = {
-  tags: ["Get shows"],
+  tags: ["Shows"],
   summary: "Get shows",
   description: `<h3>This API retrievs shows.</h3>`,
 };
@@ -32,9 +32,10 @@ export const getShowsSchema = {
 };
 
 const createShowRequestSchema = {
-  tags: ["Create show"],
+  tags: ["Admin/Shows"],
   summary: "Create show",
   description: `<h3>This API creates a show.</h3>`,
+  consumes: ["multipart/form-data"],
   body: {
     type: "object",
     required: ["title", "cover", "media"],
@@ -64,7 +65,7 @@ export const createShowSchema = {
 };
 
 const deleteShowRequestSchema = {
-  tags: ["Delete a show"],
+  tags: ["Admin/Shows"],
   summary: "Delete a show",
   description: `<h3>This API deletes show.</h3>`,
   params: {
@@ -87,9 +88,10 @@ export const deleteShowSchema = {
 };
 
 const updateShowRequestSchema = {
-  tags: ["Update a show"],
+  tags: ["Admin/Shows"],
   summary: "Update a show",
   description: `<h3>This API updates show.</h3>`,
+  consumes: ["multipart/form-data"],
   params: {
     type: "object",
     required: ["id"],
