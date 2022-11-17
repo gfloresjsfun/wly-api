@@ -100,7 +100,7 @@ const updateShow: RouteHandlerMethod = async (request, reply) => {
     const coverS3Key = Show.generateCoverS3Key(cover.filename);
     const coverBuffer = await cover.toBuffer();
     s3CommandPromises.concat(
-      uploadToS3(coverBuffer, coverS3Key),
+      uploadToS3(coverBuffer, coverS3Key, ObjectCannedACL.public_read),
       deleteFromS3(show.coverS3Key)
     );
     show.coverS3Key = coverS3Key;
