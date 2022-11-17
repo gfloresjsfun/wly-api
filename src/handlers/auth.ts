@@ -33,4 +33,15 @@ const login: RouteHandlerMethod = async (request, reply) => {
   }
 };
 
-export { login };
+const getMe: RouteHandlerMethod = async (request, reply) => {
+  const user = await User.findById(request.user.id);
+
+  if (!user) {
+    reply.unauthorized("Unauthenticated.");
+    return;
+  }
+
+  return user;
+};
+
+export { login, getMe };
