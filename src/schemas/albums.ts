@@ -6,7 +6,6 @@ export const albumSchema = {
   properties: {
     id: { type: "string" },
     title: { type: "string" },
-    description: { type: "string" },
     coverS3Url: { type: "string" },
     shows: { type: "array", items: showSchema },
   },
@@ -35,17 +34,9 @@ const createAlbumRequestSchema = {
   consumes: ["multipart/form-data"],
   body: {
     type: "object",
-    required: ["title", "description", "cover", "shows"],
+    required: ["title", "cover", "shows"],
     properties: {
       title: {
-        type: "object",
-        properties: {
-          value: {
-            type: "string",
-          },
-        },
-      },
-      description: {
         type: "object",
         properties: {
           value: {
@@ -92,17 +83,9 @@ const updateAlbumRequestSchema = {
   },
   body: {
     type: "object",
-    required: ["title", "description", "shows"],
+    required: ["title", "shows"],
     properties: {
       title: {
-        type: "object",
-        properties: {
-          value: {
-            type: "string",
-          },
-        },
-      },
-      description: {
         type: "object",
         properties: {
           value: {

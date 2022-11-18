@@ -9,10 +9,6 @@ const albumSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    description: {
-      type: String,
-      required: true,
-    },
     coverS3Key: {
       type: String,
       required: true,

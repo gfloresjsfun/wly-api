@@ -19,6 +19,7 @@ export const errorHandler = (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
+  console.log(error)
   const { validation } = error;
 
   if (Array.isArray(validation)) {
