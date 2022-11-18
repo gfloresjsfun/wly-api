@@ -3,7 +3,7 @@ import {
   createSuggestion,
   updateSuggestion,
   deleteSuggestion,
-} from "@wly/handlers/suggestions";
+} from "@handlers/suggestions";
 import {
   createSuggestionSchema,
   updateSuggestionSchema,
