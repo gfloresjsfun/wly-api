@@ -99,10 +99,10 @@ const updateShow: RouteHandlerMethod = async (request, reply) => {
     // upload new cover to s3 & delete old one
     const coverS3Key = Show.generateCoverS3Key(cover.filename);
     const coverBuffer = await cover.toBuffer();
-    s3CommandPromises.concat(
-      uploadToS3(coverBuffer, coverS3Key, ObjectCannedACL.public_read),
-      deleteFromS3(show.coverS3Key)
+    s3CommandPromises.push(
+      uploadToS3(coverBuffer, coverS3Key, ObjectCannedACL.public_read)
     );
+    s3CommandPromises.push(deleteFromS3(show.coverS3Key));
     show.coverS3Key = coverS3Key;
   }
 
@@ -110,10 +110,8 @@ const updateShow: RouteHandlerMethod = async (request, reply) => {
     // upload new media to s3 & delete old one
     const mediaS3Key = Show.generateMediaS3Key(media.filename);
     const mediaBuffer = await media.toBuffer();
-    s3CommandPromises.concat(
-      uploadToS3(mediaBuffer, mediaS3Key),
-      deleteFromS3(show.mediaS3Key)
-    );
+    s3CommandPromises.push(uploadToS3(mediaBuffer, mediaS3Key));
+    s3CommandPromises.push(deleteFromS3(show.mediaS3Key));
     show.mediaS3Key = mediaS3Key;
 
     // get media duration
