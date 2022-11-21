@@ -30,6 +30,8 @@ const createAlbum: RouteHandlerMethod = async (request, reply) => {
     shows,
   } = request.body as CreateAlbumRequest;
 
+  if (!Array.isArray(shows)) shows = [shows];
+
   // upload cover to s3
   const coverS3Key = Album.generateCoverS3Key(cover.filename);
   const coverBuffer = await cover.toBuffer();
