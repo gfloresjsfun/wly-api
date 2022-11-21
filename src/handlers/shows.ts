@@ -24,7 +24,6 @@ interface UpdateShowRequest {
 }
 
 const getShows: RouteHandlerMethod = async (request, reply) => {
-  throw new Error("new error");
   return await Show.find({});
 };
 
