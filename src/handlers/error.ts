@@ -19,7 +19,6 @@ export const errorHandler = (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
-  console.log(error)
   const { validation } = error;
 
   if (Array.isArray(validation)) {
@@ -35,5 +34,5 @@ export const errorHandler = (
     return;
   }
 
-  if (error.statusCode) reply.status(error.statusCode).send(error.message);
+  reply.code(error.statusCode || 500).send(error.message);
 };
