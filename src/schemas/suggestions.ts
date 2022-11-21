@@ -28,7 +28,7 @@ const suggestionSchema = {
     id: { type: "string" },
     title: { type: "string" },
     description: { type: "string" },
-    series: { type: "array", items: playableSchema },
+    playables: { type: "array", items: playableSchema },
     tips: { type: "array", items: tipSchema },
   },
 };
@@ -55,11 +55,11 @@ const createSuggestionRequestSchema = {
   description: `<h3>This API creates a suggestion.</h3>`,
   body: {
     type: "object",
-    required: ["title", "description", "series"],
+    required: ["title", "description", "playables"],
     properties: {
       title: { type: "string" },
       description: { type: "string" },
-      series: {
+      playables: {
         type: "array",
         items: {
           type: "object",
@@ -97,11 +97,11 @@ const updateSuggestionRequestSchema = {
   description: `<h3>This API updates a suggestion.</h3>`,
   body: {
     type: "object",
-    required: ["title", "description", "series"],
+    required: ["title", "description", "playables"],
     properties: {
       title: { type: "string" },
       description: { type: "string" },
-      series: {
+      playables: {
         type: "array",
         items: {
           type: "object",

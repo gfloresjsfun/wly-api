@@ -6,35 +6,35 @@ import { PlayableType } from "@wly/types";
 interface CreateSuggestionRequest {
   title: string;
   description: string;
-  series: Array<{ playable: Types.ObjectId; playableType: PlayableType }>;
+  playables: Array<{ playable: Types.ObjectId; playableType: PlayableType }>;
   tips?: Array<{ title: string; description?: string }>;
 }
 
 interface UpdateSuggestionRequest {
   title: string;
   description: string;
-  series: Array<{ playable: Types.ObjectId; playableType: PlayableType }>;
+  playables: Array<{ playable: Types.ObjectId; playableType: PlayableType }>;
   tips?: Array<{ title: string; description?: string }>;
 }
 
 const getSuggestions: RouteHandlerMethod = async (request, reply) => {
-  const suggestions = await Suggestion.find({}).populate("series.playable");
+  const suggestions = await Suggestion.find({}).populate("playables.playable");
   return suggestions;
 };
 
 const createSuggestion: RouteHandlerMethod = async (request, reply) => {
-  const { title, description, series, tips } =
+  const { title, description, playables, tips } =
     request.body as CreateSuggestionRequest;
 
-  const suggestion = new Suggestion({ title, description, series, tips });
+  const suggestion = new Suggestion({ title, description, playables, tips });
   await suggestion.save();
 
-  return await suggestion.populate("series.playable");
+  return await suggestion.populate("playables.playable");
 };
 
 const updateSuggestion: RouteHandlerMethod = async (request, reply) => {
   const { id } = request.params as { id: string };
-  let { title, description, series, tips } =
+  let { title, description, playables, tips } =
     request.body as UpdateSuggestionRequest;
 
   const suggestion = await Suggestion.findById(id);
@@ -45,7 +45,7 @@ const updateSuggestion: RouteHandlerMethod = async (request, reply) => {
 
   suggestion.title = title;
   suggestion.description = description;
-  suggestion.series = series;
+  suggestion.playables = playables;
 
   if (tips && Array.isArray(tips)) {
     suggestion.tips = tips;
@@ -53,7 +53,7 @@ const updateSuggestion: RouteHandlerMethod = async (request, reply) => {
 
   await suggestion.save();
 
-  return await suggestion.populate("series.playable");
+  return await suggestion.populate("playables.playable");
 };
 
 const deleteSuggestion: RouteHandlerMethod = async (request, reply) => {

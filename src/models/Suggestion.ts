@@ -10,12 +10,12 @@ const suggestionSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    series: [
+    playables: [
       {
         playable: {
           type: mongoose.Schema.Types.ObjectId,
           required: true,
-          refPath: "series.playableType",
+          refPath: "playables.playableType",
         },
         playableType: {
           type: String,
