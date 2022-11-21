@@ -19,18 +19,17 @@ interface UpdateSuggestionRequest {
 
 const getSuggestions: RouteHandlerMethod = async (request, reply) => {
   const suggestions = await Suggestion.find({}).populate("series.playable");
-  console.log(suggestions[0].series)
-  return suggestions
+  return suggestions;
 };
 
 const createSuggestion: RouteHandlerMethod = async (request, reply) => {
-  let { title, description, series, tips } =
+  const { title, description, series, tips } =
     request.body as CreateSuggestionRequest;
 
   const suggestion = new Suggestion({ title, description, series, tips });
   await suggestion.save();
 
-  return await suggestion.populate("series");
+  return await suggestion.populate("series.playable");
 };
 
 const updateSuggestion: RouteHandlerMethod = async (request, reply) => {
@@ -54,7 +53,7 @@ const updateSuggestion: RouteHandlerMethod = async (request, reply) => {
 
   await suggestion.save();
 
-  return await suggestion.populate("series");
+  return await suggestion.populate("series.playable");
 };
 
 const deleteSuggestion: RouteHandlerMethod = async (request, reply) => {
