@@ -3,18 +3,28 @@ import { Types } from "mongoose";
 import Suggestion from "@models/Suggestion";
 import { PlayableType } from "@wly/types";
 
+interface ITip {
+  summary: string;
+  details: string;
+}
+
+interface IPlayable {
+  playable: Types.ObjectId;
+  playableType: PlayableType;
+}
+
 interface CreateSuggestionRequest {
   title: string;
   description: string;
-  playables: Array<{ playable: Types.ObjectId; playableType: PlayableType }>;
-  tips?: Array<{ title: string; description?: string }>;
+  playables: IPlayable[];
+  tips?: ITip[];
 }
 
 interface UpdateSuggestionRequest {
   title: string;
   description: string;
-  playables: Array<{ playable: Types.ObjectId; playableType: PlayableType }>;
-  tips?: Array<{ title: string; description?: string }>;
+  playables: IPlayable[];
+  tips?: ITip[];
 }
 
 const getSuggestions: RouteHandlerMethod = async (request, reply) => {

@@ -26,11 +26,14 @@ const suggestionSchema = new mongoose.Schema(
     ],
     tips: [
       {
-        title: {
+        summary: {
           type: String,
           required: true,
         },
-        description: String,
+        details: {
+          type: String,
+          required: true,
+        },
       },
     ],
   },

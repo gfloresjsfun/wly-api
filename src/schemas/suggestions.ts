@@ -4,9 +4,10 @@ import { albumSchema } from "@schemas/albums";
 
 const tipSchema = {
   type: "object",
+  required: ["summary", "details"],
   properties: {
-    title: { type: "string" },
-    description: { type: "string" },
+    summary: { type: "string" },
+    details: { type: "string" },
   },
 };
 
