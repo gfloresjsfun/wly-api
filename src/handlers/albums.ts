@@ -62,6 +62,8 @@ const updateAlbum: RouteHandlerMethod = async (request, reply) => {
     return;
   }
 
+  if (!Array.isArray(shows)) shows = [shows];
+
   album.title = title;
   album.shows = shows.map((show) => show.value);
 

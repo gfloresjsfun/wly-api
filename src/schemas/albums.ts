@@ -105,14 +105,24 @@ const updateAlbumRequestSchema = {
       },
       cover: coverSchema,
       shows: {
-        type: "array",
-        minItems: 1,
-        items: {
-          type: "object",
-          properties: {
-            value: idSchema,
+        oneOf: [
+          {
+            type: "array",
+            minItems: 1,
+            items: {
+              type: "object",
+              properties: {
+                value: idSchema,
+              },
+            },
           },
-        },
+          {
+            type: "object",
+            properties: {
+              value: idSchema,
+            },
+          },
+        ],
       },
     },
   },
