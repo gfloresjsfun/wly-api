@@ -12,7 +12,7 @@ import {
 
 const suggestions: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
   fastify.post("/", { schema: createSuggestionSchema }, createSuggestion);
-  fastify.patch("/:id", { schema: updateSuggestionSchema }, updateSuggestion);
+  fastify.put("/:id", { schema: updateSuggestionSchema }, updateSuggestion);
   fastify.delete("/:id", { schema: deleteSuggestionSchema }, deleteSuggestion);
 };
 

@@ -1,5 +1,18 @@
 import mongoose from "mongoose";
 
+export const playableSchema = new mongoose.Schema({
+  playable: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    refPath: "playables.playableType",
+  },
+  playableType: {
+    type: String,
+    required: true,
+    enum: ["Album", "Show"],
+  },
+});
+
 const suggestionSchema = new mongoose.Schema(
   {
     title: {
@@ -10,20 +23,7 @@ const suggestionSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    playables: [
-      {
-        playable: {
-          type: mongoose.Schema.Types.ObjectId,
-          required: true,
-          refPath: "playables.playableType",
-        },
-        playableType: {
-          type: String,
-          required: true,
-          enum: ["Album", "Show"],
-        },
-      },
-    ],
+    playables: [playableSchema],
     tips: [
       {
         summary: {

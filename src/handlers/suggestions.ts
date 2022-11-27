@@ -55,7 +55,7 @@ const updateSuggestion: RouteHandlerMethod = async (request, reply) => {
 
   suggestion.title = title;
   suggestion.description = description;
-  suggestion.playables = playables;
+  suggestion.playables = playables as Types.DocumentArray<IPlayable>;
 
   if (tips && Array.isArray(tips)) {
     suggestion.tips = tips;
