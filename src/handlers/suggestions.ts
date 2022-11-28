@@ -1,17 +1,7 @@
 import { RouteHandlerMethod } from "fastify";
 import { Types } from "mongoose";
 import Suggestion from "@models/Suggestion";
-import { PlayableType } from "@wly/types";
-
-interface ITip {
-  summary: string;
-  details: string;
-}
-
-interface IPlayable {
-  playable: Types.ObjectId;
-  playableType: PlayableType;
-}
+import { IPlayable, ITip } from "@wly/types";
 
 interface CreateSuggestionRequest {
   title: string;
