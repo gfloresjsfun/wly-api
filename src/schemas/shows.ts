@@ -1,4 +1,9 @@
-import { coverSchema, mediaSchema, errorSchemas } from "@schemas/common";
+import {
+  coverSchema,
+  mediaSchema,
+  errorSchemas,
+  idSchema,
+} from "@schemas/common";
 
 export const showSchema = {
   type: "object",
