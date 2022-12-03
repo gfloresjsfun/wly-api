@@ -9,14 +9,14 @@ interface CreateAlbumRequest {
   title: { value: string };
   description: { value: string };
   cover: MultipartFile;
-  shows: Array<{ value: string }>;
+  shows: { value: Types.ObjectId }[];
 }
 
 interface UpdateAlbumRequest {
   title: { value: string };
   description: { value: string };
   cover?: MultipartFile;
-  shows: Array<{ value: Types.ObjectId }>;
+  shows: { value: Types.ObjectId }[];
 }
 
 const getAlbums: RouteHandlerMethod = async (request, reply) => {
