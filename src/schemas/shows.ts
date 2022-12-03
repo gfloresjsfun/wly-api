@@ -3,7 +3,7 @@ import { coverSchema, mediaSchema, errorSchemas } from "@schemas/common";
 export const showSchema = {
   type: "object",
   properties: {
-    id: { type: "string" },
+    id: idSchema,
     title: { type: "string" },
     coverS3Url: { type: "string" },
     mediaS3Key: { type: "string" },
@@ -72,7 +72,7 @@ const deleteShowRequestSchema = {
     type: "object",
     required: ["id"],
     properties: {
-      id: { type: "string" },
+      id: idSchema,
     },
   },
 };
@@ -96,7 +96,7 @@ const updateShowRequestSchema = {
     type: "object",
     required: ["id"],
     properties: {
-      id: { type: "string" },
+      id: idSchema,
     },
   },
   body: {

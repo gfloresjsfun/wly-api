@@ -23,10 +23,10 @@ const playableSchema = {
   },
 };
 
-const suggestionSchema = {
+export const suggestionSchema = {
   type: "object",
   properties: {
-    id: { type: "string" },
+    id: idSchema,
     title: { type: "string" },
     description: { type: "string" },
     playables: { type: "array", items: playableSchema },
@@ -142,7 +142,7 @@ const deleteSuggestionRequestSchema = {
     type: "object",
     required: ["id"],
     properties: {
-      id: { type: "string" },
+      id: idSchema,
     },
   },
 };

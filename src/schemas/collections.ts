@@ -17,7 +17,7 @@ const playableSchema = {
 const collectionSchema = {
   type: "object",
   properties: {
-    id: { type: "string" },
+    id: idSchema,
     title: { type: "string" },
     playables: { type: "array", items: playableSchema },
   },
@@ -121,7 +121,7 @@ const deleteCollectionRequestSchema = {
     type: "object",
     required: ["id"],
     properties: {
-      id: { type: "string" },
+      id: idSchema,
     },
   },
 };

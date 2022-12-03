@@ -4,7 +4,7 @@ import { showSchema } from "@schemas/shows";
 export const albumSchema = {
   type: "object",
   properties: {
-    id: { type: "string" },
+    id: idSchema,
     title: { type: "string" },
     coverS3Url: { type: "string" },
     shows: { type: "array", items: showSchema },
@@ -88,7 +88,7 @@ const updateAlbumRequestSchema = {
     type: "object",
     required: ["id"],
     properties: {
-      id: { type: "string" },
+      id: idSchema,
     },
   },
   body: {
@@ -146,7 +146,7 @@ const deleteAlbumRequestSchema = {
     type: "object",
     required: ["id"],
     properties: {
-      id: { type: "string" },
+      id: idSchema,
     },
   },
 };
