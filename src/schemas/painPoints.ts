@@ -28,6 +28,25 @@ export const getPainPointsSchema = {
   },
 };
 
+const getPainPointGroupsRequestSchema = {
+  tags: ["Pain Points"],
+  summary: "Get pain point groups",
+  description: `<h3>This API retrievs pain point groups.</h3>`,
+};
+
+const getPainPointGroupsResponseSchema = {
+  type: "array",
+  items: { type: "string" },
+};
+
+export const getPainPointGroupsSchema = {
+  ...getPainPointGroupsRequestSchema,
+  response: {
+    200: getPainPointGroupsResponseSchema,
+    ...errorSchemas,
+  },
+};
+
 const createPainPointRequestSchema = {
   tags: ["Admin/PainPoints"],
   summary: "Create pain point",

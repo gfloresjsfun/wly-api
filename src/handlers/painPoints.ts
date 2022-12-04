@@ -20,6 +20,12 @@ const getPainPoints: RouteHandlerMethod = async (request, reply) => {
   return await PainPoint.find({}).populate("suggestions");
 };
 
+const getPainPointGroups: RouteHandlerMethod = async (request, reply) => {
+  const painPoints = await PainPoint.find({});
+
+  return painPoints.map((painPoint) => painPoint.group);
+};
+
 const createPainPoint: RouteHandlerMethod = async (request, reply) => {
   let { name, description, group, suggestions } =
     request.body as CreatePainPointRequest;
@@ -77,4 +83,10 @@ const deletePainPoint: RouteHandlerMethod = async (request, reply) => {
   return painPoint;
 };
 
-export { getPainPoints, createPainPoint, updatePainPoint, deletePainPoint };
+export {
+  getPainPoints,
+  getPainPointGroups,
+  createPainPoint,
+  updatePainPoint,
+  deletePainPoint,
+};
