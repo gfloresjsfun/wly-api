@@ -8,7 +8,17 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
+  },
+  name: {
+    type: String,
     required: true,
+  },
+  provider: {
+    type: String,
+    enum: ["apple", "facebook", "google", "linkedIn", "twitter"],
+  },
+  providerId: {
+    type: String,
   },
   role: {
     type: String,

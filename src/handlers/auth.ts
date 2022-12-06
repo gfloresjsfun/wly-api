@@ -33,6 +33,48 @@ const login: RouteHandlerMethod = async (request, reply) => {
   }
 };
 
+const loginWithGoogle: RouteHandlerMethod = async (request, reply) => {
+  const { providerId } = request.body as { providerId: string };
+
+  try {
+    const user = await User.findOne({ provider: "google", providerId });
+
+    if (!user) {
+      reply.badRequest("You are not registered.");
+      return;
+    }
+
+    const token = request.server.jwt.sign({ id: user?.id });
+
+    return { token, email: user.email, role: user.role };
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const registerWithGoogle: RouteHandlerMethod = async (request, reply) => {
+  const { providerId, email, name } = request.body as {
+    providerId: string;
+    email: string;
+    name: string;
+  };
+
+  try {
+    let user = await User.findOne({ provider: "google", providerId });
+
+    if (!user) {
+      user = new User({ email, name, provider: "google", providerId });
+      await user.save();
+    }
+
+    const token = request.server.jwt.sign({ id: user?.id });
+
+    return { token, email: user.email, role: user.role };
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 const getMe: RouteHandlerMethod = async (request, reply) => {
   const user = await User.findById(request.user.id);
 
@@ -44,4 +86,4 @@ const getMe: RouteHandlerMethod = async (request, reply) => {
   return user;
 };
 
-export { login, getMe };
+export { login, loginWithGoogle, registerWithGoogle, getMe };
