@@ -20,6 +20,23 @@ const userSchema = new mongoose.Schema({
   providerId: {
     type: String,
   },
+  birthdate: {
+    type: Date,
+  },
+  activityLevel: {
+    type: String,
+    enum: ["sedentary", "low", "high"],
+  },
+  interest: {
+    type: String,
+    enum: ["painPoint", "meditation", "yoga"],
+  },
+  painPoints: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "PainPoint",
+    },
+  ],
   role: {
     type: String,
     enum: ["admin", "user"],
