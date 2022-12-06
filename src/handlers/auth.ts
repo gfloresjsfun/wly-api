@@ -2,16 +2,16 @@ import { RouteHandlerMethod } from "fastify";
 import User from "@models/User";
 
 const login: RouteHandlerMethod = async (request, reply) => {
-  const { username, password } = request.body as {
-    username: string;
+  const { email, password } = request.body as {
+    email: string;
     password: string;
   };
 
   try {
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ email });
 
     if (!user) {
-      reply.badRequest("Username is not correct.");
+      reply.badRequest("Email is not correct.");
       return;
     }
 
@@ -27,7 +27,7 @@ const login: RouteHandlerMethod = async (request, reply) => {
 
     const token = request.server.jwt.sign({ id: user?.id });
 
-    return { token, username, role: user.role };
+    return { token, email, role: user.role };
   } catch (e) {
     console.log(e);
   }

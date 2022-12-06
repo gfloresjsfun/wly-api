@@ -4,7 +4,7 @@ const userSchema = {
   type: "object",
   properties: {
     token: { type: "string" },
-    username: { type: "string" },
+    email: { type: "string" },
     role: { type: "string", enum: ["admin", "user"] },
   },
 };
@@ -16,9 +16,9 @@ const loginRequestSchema = {
   body: {
     title: "Login",
     type: "object",
-    required: ["username", "password"],
+    required: ["email", "password"],
     properties: {
-      username: { type: "string" },
+      email: { type: "string" },
       password: { type: "string" },
     },
   },
