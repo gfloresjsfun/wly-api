@@ -94,17 +94,20 @@ const patchMe: RouteHandlerMethod = async (request, reply) => {
     return;
   }
 
-  const { birthdate, activityLevel, interest, painPoints } = request.body as {
-    birthdate: string;
-    activityLevel: ActivityLevel;
-    interest: Interest;
-    painPoints: mongoose.Types.ObjectId[];
-  };
+  const { birthdate, activityLevel, interest, painPoints, termsAccepted } =
+    request.body as {
+      birthdate: string;
+      activityLevel: ActivityLevel;
+      interest: Interest;
+      painPoints: mongoose.Types.ObjectId[];
+      termsAccepted: boolean;
+    };
 
   if (birthdate) user.birthdate = birthdate;
   if (activityLevel) user.activityLevel = activityLevel;
   if (interest) user.interest = interest;
   if (painPoints) user.painPoints = painPoints;
+  if (termsAccepted) user.termsAccepted = termsAccepted;
 
   await user.save();
 

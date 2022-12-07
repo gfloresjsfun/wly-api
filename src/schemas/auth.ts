@@ -14,6 +14,9 @@ const userSchema = {
       type: "array",
       item: painPointSchema,
     },
+    termsAccepted: {
+      type: "boolean",
+    },
   },
 };
 
@@ -128,6 +131,9 @@ const patchMeRequestSchema = {
       painPoints: {
         type: "array",
         items: idSchema,
+      },
+      termsAccepted: {
+        type: "boolean",
       },
     },
   },

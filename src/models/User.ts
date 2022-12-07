@@ -37,6 +37,10 @@ const userSchema = new mongoose.Schema({
       ref: "PainPoint",
     },
   ],
+  termsAccepted: {
+    type: Boolean,
+    default: false,
+  },
   role: {
     type: String,
     enum: ["admin", "user"],
