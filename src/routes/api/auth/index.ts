@@ -3,8 +3,9 @@ import {
   loginWithGoogle as loginWithGoogleHandler,
   registerWithGoogle as registerWithGoogleHandler,
   getMe as getMeHandler,
+  patchMe as patchMeHandler,
 } from "@handlers/auth";
-import { loginWithGoogleSchema, registerWithGoogleSchema, getMeSchema } from "@schemas/auth";
+import { loginWithGoogleSchema, registerWithGoogleSchema, getMeSchema, patchMeSchema } from "@schemas/auth";
 
 const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
   fastify.post(
@@ -24,6 +25,14 @@ const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
       preHandler: [fastify.authenticate],
     },
     getMeHandler
+  );
+  fastify.patch(
+    "/me",
+    {
+      schema: patchMeSchema,
+      preHandler: [fastify.authenticate],
+    },
+    patchMeHandler
   );
 };
 

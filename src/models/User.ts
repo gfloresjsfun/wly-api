@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema({
     type: String,
   },
   birthdate: {
-    type: Date,
+    type: String,
   },
   activityLevel: {
     type: String,

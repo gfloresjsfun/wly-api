@@ -1,5 +1,7 @@
 import { RouteHandlerMethod } from "fastify";
+import mongoose from "mongoose";
 import User from "@models/User";
+import { ActivityLevel, Interest } from "@wly/types";
 
 const login: RouteHandlerMethod = async (request, reply) => {
   const { email, password } = request.body as {
@@ -27,7 +29,7 @@ const login: RouteHandlerMethod = async (request, reply) => {
 
     const token = request.server.jwt.sign({ id: user?.id });
 
-    return { token, email, role: user.role };
+    return { token, email };
   } catch (e) {
     console.log(e);
   }
@@ -46,7 +48,7 @@ const loginWithGoogle: RouteHandlerMethod = async (request, reply) => {
 
     const token = request.server.jwt.sign({ id: user?.id });
 
-    return { token, email: user.email, role: user.role };
+    return { token, email: user.email };
   } catch (e) {
     console.log(e);
   }
@@ -69,7 +71,7 @@ const registerWithGoogle: RouteHandlerMethod = async (request, reply) => {
 
     const token = request.server.jwt.sign({ id: user?.id });
 
-    return { token, email: user.email, role: user.role };
+    return { token, email: user.email };
   } catch (e) {
     console.log(e);
   }
@@ -77,7 +79,6 @@ const registerWithGoogle: RouteHandlerMethod = async (request, reply) => {
 
 const getMe: RouteHandlerMethod = async (request, reply) => {
   const user = await User.findById(request.user.id);
-
   if (!user) {
     reply.unauthorized("Unauthenticated.");
     return;
@@ -86,4 +87,28 @@ const getMe: RouteHandlerMethod = async (request, reply) => {
   return user;
 };
 
-export { login, loginWithGoogle, registerWithGoogle, getMe };
+const patchMe: RouteHandlerMethod = async (request, reply) => {
+  const user = await User.findById(request.user.id);
+  if (!user) {
+    reply.unauthorized("Unauthenticated.");
+    return;
+  }
+
+  const { birthdate, activityLevel, interest, painPoints } = request.body as {
+    birthdate: string;
+    activityLevel: ActivityLevel;
+    interest: Interest;
+    painPoints: mongoose.Types.ObjectId[];
+  };
+
+  if (birthdate) user.birthdate = birthdate;
+  if (activityLevel) user.activityLevel = activityLevel;
+  if (interest) user.interest = interest;
+  if (painPoints) user.painPoints = painPoints;
+
+  await user.save();
+
+  return user;
+};
+
+export { login, loginWithGoogle, registerWithGoogle, getMe, patchMe };
