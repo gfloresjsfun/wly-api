@@ -22,8 +22,9 @@ const getPainPoints: RouteHandlerMethod = async (request, reply) => {
 
 const getPainPointGroups: RouteHandlerMethod = async (request, reply) => {
   const painPoints = await PainPoint.find({});
+  const groups = painPoints.map((painPoint) => painPoint.group);
 
-  return painPoints.map((painPoint) => painPoint.group);
+  return groups.filter((group, index) => groups.indexOf(group) === index);
 };
 
 const createPainPoint: RouteHandlerMethod = async (request, reply) => {
