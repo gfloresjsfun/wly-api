@@ -4,7 +4,6 @@ import { painPointSchema } from "@schemas/painPoints";
 const userSchema = {
   type: "object",
   properties: {
-    token: { type: "string" },
     email: { type: "string" },
     role: { type: "string", enum: ["admin", "user"] },
     birthdate: { type: "string" },
@@ -35,7 +34,13 @@ const loginRequestSchema = {
   },
 };
 
-const loginResponseSchema = userSchema;
+const loginResponseSchema = {
+  type: "object",
+  properties: {
+    token: { type: "string" },
+    user: userSchema,
+  },
+};
 
 export const loginSchema = {
   ...loginRequestSchema,
@@ -59,7 +64,13 @@ const loginWithGoogleRequestSchema = {
   },
 };
 
-const loginWithGoogleResponseSchema = userSchema;
+const loginWithGoogleResponseSchema = {
+  type: "object",
+  properties: {
+    token: { type: "string" },
+    user: userSchema,
+  },
+};
 
 export const loginWithGoogleSchema = {
   ...loginWithGoogleRequestSchema,
@@ -85,7 +96,13 @@ const registerWithGoogleRequestSchema = {
   },
 };
 
-const registerWithGoogleResponseSchema = userSchema;
+const registerWithGoogleResponseSchema = {
+  type: "object",
+  properties: {
+    token: { type: "string" },
+    user: userSchema,
+  },
+};
 
 export const registerWithGoogleSchema = {
   ...registerWithGoogleRequestSchema,

@@ -48,7 +48,7 @@ const loginWithGoogle: RouteHandlerMethod = async (request, reply) => {
 
     const token = request.server.jwt.sign({ id: user?.id });
 
-    return { token, email: user.email };
+    return { token, user };
   } catch (e) {
     console.log(e);
   }
@@ -71,7 +71,7 @@ const registerWithGoogle: RouteHandlerMethod = async (request, reply) => {
 
     const token = request.server.jwt.sign({ id: user?.id });
 
-    return { token, email: user.email };
+    return { token, user };
   } catch (e) {
     console.log(e);
   }
