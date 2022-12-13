@@ -1,11 +1,17 @@
 import { FastifyPluginAsync } from "fastify";
 import {
   loginWithGoogle as loginWithGoogleHandler,
+  loginWithDummyUser as loginWithDummyUserHandler,
   registerWithGoogle as registerWithGoogleHandler,
   getMe as getMeHandler,
   patchMe as patchMeHandler,
 } from "@handlers/auth";
-import { loginWithGoogleSchema, registerWithGoogleSchema, getMeSchema, patchMeSchema } from "@schemas/auth";
+import {
+  loginWithGoogleSchema,
+  registerWithGoogleSchema,
+  getMeSchema,
+  patchMeSchema,
+} from "@schemas/auth";
 
 const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
   fastify.post(
@@ -13,6 +19,7 @@ const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
     { schema: loginWithGoogleSchema },
     loginWithGoogleHandler
   );
+  fastify.post("/login-with-dummy-user", loginWithDummyUserHandler);
   fastify.post(
     "/register-with-google",
     { schema: registerWithGoogleSchema },

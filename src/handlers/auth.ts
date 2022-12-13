@@ -54,6 +54,23 @@ const loginWithGoogle: RouteHandlerMethod = async (request, reply) => {
   }
 };
 
+const loginWithDummyUser: RouteHandlerMethod = async (request, reply) => {
+  try {
+    const user = await User.findOne({ email: "dummy@wailana.com" });
+
+    if (!user) {
+      reply.badRequest("You are not registered.");
+      return;
+    }
+
+    const token = request.server.jwt.sign({ id: user?.id });
+
+    return { token, user };
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 const registerWithGoogle: RouteHandlerMethod = async (request, reply) => {
   const { providerId, email, name } = request.body as {
     providerId: string;
@@ -114,4 +131,11 @@ const patchMe: RouteHandlerMethod = async (request, reply) => {
   return user;
 };
 
-export { login, loginWithGoogle, registerWithGoogle, getMe, patchMe };
+export {
+  login,
+  loginWithGoogle,
+  loginWithDummyUser,
+  registerWithGoogle,
+  getMe,
+  patchMe,
+};
